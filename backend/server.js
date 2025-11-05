@@ -12,6 +12,6 @@ const response = await client.responses.create({
   input: 'Joke on computer science',
 });
 
-console.log(response.output_text);
+console.log(response.choices[0].message.content);
 
 
