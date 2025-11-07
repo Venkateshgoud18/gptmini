@@ -8,26 +8,39 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 const PORT = process.env.PORT || 3000;
 dotenv.config();
-
+app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // This is the default and can be omitted
+
+app.post('/chat', async (req, res) => { 
+  const options={
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      messages: [{
+        role: "user",
+        content: "Hello, how are you?"
+      }]
+    })
+  }
+  try{
+    const response=await fetch('https://api.openai.com/v1/chat/completions',options);
+    const data=await response.json();
+    res.json(data);
+    console.log(data);
+  }
+  catch(error){
+    console.error('Error:', error);
+    res.status(500).json({ error: 'An error occurred while processing your request.' });
+  }
 });
-
-const response = await client.responses.create({
-  model: "gpt-4o",
-
-  instructions: 'You are a coding assistant that talks like a pirate',
-  input: 'Joke on computer science',
-});
-
-console.log(response.choices[0].message.content);
-
-
 
 
