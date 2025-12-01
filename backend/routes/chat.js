@@ -1,8 +1,9 @@
 import express from 'express';
 const router = express.Router();
 import Thread from '../models/Thread.js';
+import getOpenAIAPIResponce from '../utils/openai.js';
 
-router.post("/chat",async(req,res)=>{
+router.post("/test",async(req,res)=>{
     try{
         const thread=new Thread({
             threadId:"test123",
@@ -60,4 +61,34 @@ router.delete("/threads/:threadId",async(req,res)=>{
         res.status(500).json({ error: 'An error occurred while processing your request.' });
     }
 });
+//post a new message to a thread
+router.post("/chat",async(req,res)=>{
+    const {threadId,message}=req.body;
+    if(!threadId || !message){
+        return res.status(400).json({error:'threadId and message are required'});
+    }
+    try{
+        const thread=await Thread.findOne({threadId});
+        if(!thread){
+            thread=new Thread({
+                threadId,
+                title:message,
+                messages:[{role:"user",content:message}]
+            });
+        }
+        else{
+            thread.messages.push({role:"user",content:message});
+        }
+        const assistantReplay=await getOpenAIAPIResponce(message);
+        thread.messages.push({role:"assistant",content:assistantReplay});
+        thread.updatedAt=Date.now();
+        await thread.save();
+        res.json({reply:assistantReplay});
+
+    }
+    catch(err){
+        console.log('Error:', err);
+        res.status(500).json({ error: 'An error occurred while processing your request.' });
+    }
+})
 export default router;
