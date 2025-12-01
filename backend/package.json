@@ -9,7 +9,7 @@
     "dotenv": "^17.2.2",
     "express": "^4.21.2",
     "fs": "^0.0.1-security",
-    "mongoose": "^8.19.3",
+    "mongoose": "^8.20.1",
     "node-fetch": "^3.3.2",
     "openai": "^4.0.0"
   }
