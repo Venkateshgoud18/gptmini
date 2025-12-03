@@ -1,0 +1,112 @@
+/* Main Chat Window */
+.chatWindow {
+    height: 100vh;
+    width: 100%;
+    background-color: #131314; /* ChatGPT dark mode */
+    color: #ECECEC;
+    display: flex;
+    flex-direction: column;
+    font-family: "Inter", sans-serif;
+  }
+  
+  /* Navbar */
+  .navbar {
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    border-bottom: 1px solid #2A2A2A;
+    background-color: #1E1F20;
+  }
+  
+  .navbar span {
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .userIconDiv {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    background-color: #2C2C2E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Chat Area */
+  .chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+  }
+  
+  /* Bottom Input Section */
+  .chatInput {
+    padding: 12px 20px;
+    background-color: #131314;
+    border-top: 1px solid #2A2A2A;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  /* Horizontal Input Row (ChatGPT style) */
+  .inputRow {
+    display: flex;
+    align-items: center;
+    background-color: #1E1F20;
+    border: 1px solid #3A3A3C;
+    border-radius: 12px;
+    padding: 6px 12px;
+    gap: 10px;
+  }
+  
+  /* Input field */
+  .inputRow input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #EAEAEA;
+    font-size: 14px;
+    padding: 6px 0;
+  }
+  
+  /* Send Button */
+  #sendButton {
+    background-color: #8aa09a;
+    border: none;
+    color: white;              /* icon white */
+    border-radius: 50%;        /* round shape */
+    width: 32px;               /* small size */
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s ease;
+  }
+  
+  #sendButton i {
+    color: white;              /* ensures icon stays white */
+    font-size: 14px;
+  }
+  
+  /* Hover effect */
+  #sendButton:hover {
+    background-color: #a9b7b4;
+  }
+  
+  /* Info text */
+  .info {
+    text-align: center;
+    color: #959595;
+    font-size: 11px;
+  }
+  
