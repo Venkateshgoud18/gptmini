@@ -1,34 +1,68 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import './ChatWindow.css';
 import Chat from './Chat.jsx';
 import { MyContext } from './MyContext.jsx';
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 function ChatWindow() {
-  const { prompt, setPrompt, reply, setReply,currThreadId,setCurrThreadId } = React.useContext(MyContext);
+  const {
+    prompt, setPrompt,
+    currThreadId,
+    prevChats, setPrevChats,
+    newChat, setNewChat,
+  } = useContext(MyContext);
 
+  const [loading, setLoading] = useState(false);
 
-  const getReply = async() => {
-    const options={
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify({
-        message: prompt,
-        threadId:currThreadId
-      } )
-    };
+  const getReply = async () => {
+    if (!prompt.trim()) return;
+
+    // 1️⃣ Add user message instantly
+    setPrevChats(prev => [
+      ...prev,
+      { role: "user", content: prompt }
+    ]);
+
+    setNewChat(false);       // hide "Start a new chat"
+    const userPrompt = prompt;
+    setPrompt("");           // clear input
+    setLoading(true);        // show loader
+
     try {
-      const response = await fetch('http://localhost:8080/api/chat',options);
+      const response = await fetch('http://localhost:8080/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userPrompt,
+          threadId: currThreadId,
+        })
+      });
+
       const data = await response.json();
-      setReply(data.reply);
-      setPrompt("");
-      console.log("Reply received:", data.reply);
+
+      // 2️⃣ Add GPT reply or error message
+      if (data.error) {
+        setPrevChats(prev => [
+          ...prev,
+          { role: "gpt", content: "⚠️ " + data.error.message }
+        ]);
+      } else {
+        setPrevChats(prev => [
+          ...prev,
+          { role: "gpt", content: data.reply }
+        ]);
+      }
+
+    } catch (err) {
+      // 3️⃣ Backend failed
+      setPrevChats(prev => [
+        ...prev,
+        { role: "gpt", content: "⚠️ Backend error: Could not reach server." }
+      ]);
+
     }
-    catch(err){
-      console.error("Error fetching reply:", err);
-    }
-    
+
+    setTimeout(() => setLoading(false), 300);
   };
 
   return (
@@ -40,17 +74,18 @@ function ChatWindow() {
 
       <div className="chat">
         <Chat />
+        <ScaleLoader color="#36d7b7" loading={loading} className="loader" />
       </div>
 
       <div className="chatInput">
         <div className="inputRow">
-          <input 
-            type="text" 
-            placeholder="Ask Anything.." 
-            value={prompt} 
-            onChange={(e)=>setPrompt(e.target.value)}
+          <input
+            type="text"
+            placeholder="Ask Anything.."
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 getReply();
               }
             }}
@@ -63,7 +98,6 @@ function ChatWindow() {
 
         <p className="info">SigmaGpt can make mistakes</p>
       </div>
-
     </div>
   );
 }
