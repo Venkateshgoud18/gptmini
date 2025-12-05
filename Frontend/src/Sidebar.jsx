@@ -1,19 +1,86 @@
-import React from 'react';
-import './Sidebar.css';
+import React, { useEffect } from "react";
+import "./Sidebar.css";
+import { MyContext } from "./MyContext.jsx";
+import { v1 as uuidv1 } from "uuid";
+
 function Sidebar() {
+  const {
+    allThreads, setAllThreads,
+    prevChats, setPrevChats,
+    setNewChat,
+    setPrompt,
+    setReply,
+    setCurrThreadId
+  } = React.useContext(MyContext);
+
+  const getAllThreads = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/threads");
+      const data = await response.json();
+
+      const filteredData = data.map(thread => ({
+        threadId: thread.threadId,
+        title: thread.title,   // ✅ FIXED
+        lastMessage: thread.messages?.length
+          ? thread.messages[thread.messages.length - 1]
+          : null
+      }));
+
+      setAllThreads(filteredData);
+    } catch (err) {
+      console.error("Error fetching threads:", err);
+    }
+  };
+
+  // Fetch on load
+  useEffect(() => {
+    getAllThreads();
+  }, []);
+
+  // Refresh when chats change
+  useEffect(() => {
+    getAllThreads();
+  }, [prevChats]);
+
+  // NEW CHAT handler
+  const startNewChat = () => {
+    setNewChat(true);
+    setPrompt("");
+    setReply(null);
+    setPrevChats([]);              // CLEAR SCREEN
+    setCurrThreadId(uuidv1());     // ✔ CREATE NEW THREAD ID
+  };
+
   return (
     <section className="sidebar">
-      <h2>Sidebar</h2>
-      <button><img src="/src/assets/image.png" alt="gpt logo"></img><i class="fa-regular fa-pen-to-square"></i></button>
+      <button onClick={startNewChat} className="new-chat-btn">
+        <h2>Sidebar</h2>
+        <img src="/src/assets/image.png" alt="gpt logo" />
+        <i className="fa-regular fa-pen-to-square"></i>
+      </button>
 
-      {/* Sidebar content such as navigation links would go here */}
       <ul className="history">
-        <li>History 1</li>
-        <li>History 2</li>
-        <li>History 3</li>
+        {allThreads.map(thread => (
+          <li key={thread.threadId}>
+            <div className="thread-info">
+              <p className="thread-title">
+                {thread.title || "New Chat"}
+              </p>
+
+              <p className="last-message">
+                {thread.lastMessage
+                  ? thread.lastMessage.role === "user"
+                    ? thread.lastMessage.content
+                    : "⚠️ GPT unavailable"
+                  : "No messages yet"}
+              </p>
+            </div>
+          </li>
+        ))}
       </ul>
+
       <div className="sign">
-        <p>By Venkatesh &hearts;</p>
+        <p>By Venkatesh ❤️</p>
       </div>
     </section>
   );

@@ -49,4 +49,17 @@
     font-size: 18px;
     font-weight: 500;
   }
+.hljs-ln-numbers {
+    text-align: right;
+    color: #555;
+    user-select: none;
+    padding-right: 10px;
+  }
+  
+  .hljs-ln-code {
+    padding-left: 10px;
+  }
+  .hljs{
+    border-radius: 14px;
+  }
   

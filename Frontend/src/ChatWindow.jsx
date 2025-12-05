@@ -16,31 +16,30 @@ function ChatWindow() {
 
   const getReply = async () => {
     if (!prompt.trim()) return;
-
-    // 1️⃣ Add user message instantly
+  
+    // show user message instantly
     setPrevChats(prev => [
       ...prev,
       { role: "user", content: prompt }
     ]);
-
-    setNewChat(false);       // hide "Start a new chat"
+  
+    setNewChat(false);
     const userPrompt = prompt;
-    setPrompt("");           // clear input
-    setLoading(true);        // show loader
-
+    setPrompt("");
+    setLoading(true);
+  
     try {
-      const response = await fetch('http://localhost:8080/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("http://localhost:8080/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: userPrompt,
-          threadId: currThreadId,
+          threadId: currThreadId
         })
       });
-
+  
       const data = await response.json();
-
-      // 2️⃣ Add GPT reply or error message
+  
       if (data.error) {
         setPrevChats(prev => [
           ...prev,
@@ -52,18 +51,16 @@ function ChatWindow() {
           { role: "gpt", content: data.reply }
         ]);
       }
-
     } catch (err) {
-      // 3️⃣ Backend failed
       setPrevChats(prev => [
         ...prev,
-        { role: "gpt", content: "⚠️ Backend error: Could not reach server." }
+        { role: "gpt", content: "⚠️ Backend error" }
       ]);
-
     }
-
-    setTimeout(() => setLoading(false), 300);
+  
+    setLoading(false);
   };
+  
 
   return (
     <div className="chatWindow">

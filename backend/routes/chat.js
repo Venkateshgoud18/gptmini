@@ -62,33 +62,69 @@ router.delete("/threads/:threadId",async(req,res)=>{
     }
 });
 //post a new message to a thread
-router.post("/chat",async(req,res)=>{
-    const {threadId,message}=req.body;
-    if(!threadId || !message){
-        return res.status(400).json({error:'threadId and message are required'});
+router.post("/chat", async (req, res) => {
+    console.log("🔥 /api/chat HIT!");
+  
+    const { threadId, message } = req.body;
+    console.log("Received body:", req.body);
+  
+    if (!threadId || !message) {
+      return res.status(400).json({ error: "threadId and message are required" });
     }
-    try{
-        let thread=await Thread.findOne({threadId});
-        if(!thread){
-            thread=new Thread({
-                threadId,
-                title:message,
-                messages:[{role:"user",content:message}]
-            });
-        }
-        else{
-            thread.messages.push({role:"user",content:message});
-        }
-        const assistantReplay=await getOpenAIAPIResponce(message);
-        thread.messages.push({role:"assistant",content:assistantReplay});
-        thread.updatedAt=Date.now();
-        await thread.save();
-        res.json({reply:assistantReplay});
-
+  
+    try {
+      let thread = await Thread.findOne({ threadId });
+      console.log("Thread found:", !!thread);
+  
+      if (!thread) {
+        console.log("Creating new thread...");
+        thread = new Thread({
+          threadId,
+          title: message,
+          messages: []
+        });
+      }
+  
+      console.log("Adding USER message:", message);
+      thread.messages.push({ role: "user", content: message });
+  
+      let assistantReply = "";
+  
+      try {
+        console.log("Calling GPT...");
+        try {
+            const apiResponse = await getOpenAIAPIResponce(message);
+          
+            // If the API returned an object, convert to string
+            assistantReplay = 
+              typeof apiResponse === "string"
+                ? apiResponse
+                : JSON.stringify(apiResponse);
+          
+          } catch (err) {
+            console.log("GPT ERROR:", err.message);
+            assistantReplay = "⚠️ GPT unavailable";
+          }
+          
+      } catch (err) {
+        console.log("GPT ERROR:", err.message);
+        assistantReply = "⚠️ GPT unavailable";
+      }
+  
+      console.log("Adding assistant reply:", assistantReply);
+      thread.messages.push({ role: "assistant", content: assistantReply });
+  
+      console.log("Saving thread to DB...");
+      await thread.save();
+  
+      console.log("Thread saved successfully!");
+      res.json({ reply: assistantReply });
+  
+    } catch (err) {
+      console.log("🔥 SERVER ERROR in /api/chat:", err);
+      res.status(500).json({ error: err.message || "Server error" });
     }
-    catch(err){
-        console.log('Error:', err);
-        res.status(500).json({ error: 'An error occurred while processing your request.' });
-    }
-})
+  });
+  
+  
 export default router;
