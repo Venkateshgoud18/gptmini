@@ -50,6 +50,47 @@ function Sidebar() {
     setPrevChats([]);              // CLEAR SCREEN
     setCurrThreadId(uuidv1());     // ✔ CREATE NEW THREAD ID
   };
+  // CHANGE THREAD handler
+  const changeThread=async (newThreadId)=>{
+    setCurrThreadId(newThreadId);
+
+    try{
+      const response = await fetch(`http://localhost:8080/api/threads/${newThreadId}`);
+      const data = await response.json();
+
+      setPrevChats(data.messages || []);  // LOAD MESSAGES OF SELECTED THREAD
+      setNewChat(false);
+      setPrompt("");
+      setReply(null);
+    }
+    catch(err){
+      console.error("Error changing thread:", err);
+    }
+
+  }
+
+  // DELETE THREAD handler
+  const deleteThread=async(threadId)=>{
+    try{
+      const response=await fetch(`http://localhost:8080/api/threads/${threadId}`,{
+        method:'DELETE'
+      });
+      const data=await response.json();
+      console.log(data.message);
+      // REFRESH THREADS
+      getAllThreads();
+      if(threadId===setCurrThreadId){
+        // CLEARS CHAT IF DELETED THREAD IS CURRENT
+        setPrevChats([]);
+        setNewChat(true);
+        setPrompt("");
+        setReply(null);
+      }
+    }
+    catch(err){
+      console.error("Error deleting thread:",err);
+    }
+  }
 
   return (
     <section className="sidebar">
@@ -63,8 +104,14 @@ function Sidebar() {
         {allThreads.map(thread => (
           <li key={thread.threadId}>
             <div className="thread-info">
-              <p className="thread-title">
-                {thread.title || "New Chat"}
+              <p className="thread-title" onClick={(e)=>changeThread(thread.threadId)}>
+
+                {thread.title || "New Chat"}<i class="fa-solid fa-trash delete-icon" onClick={(e)=>{
+                  e.stopPropagation()
+                  // DELETE THREAD
+                  deleteThread(thread.threadId);
+                }
+                  }></i>
               </p>
 
               <p className="last-message">

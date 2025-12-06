@@ -78,4 +78,20 @@
     font-size: 14px;
     color: #8E8E8E;
   }
+  .delete-icon {
+    opacity: 0;
+    margin-left: 10px;
+    color: #999;
+    transition: opacity 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+  }
   
+  /* Show trash icon on hover */
+  .thread-info:hover .delete-icon {
+    opacity: 1;
+  }
+  
+  /* Hover effect: red colored */
+  .delete-icon:hover {
+    color: #ff4d4d;
+  }
