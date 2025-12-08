@@ -13,6 +13,7 @@ function ChatWindow() {
   } = useContext(MyContext);
 
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const getReply = async () => {
     if (!prompt.trim()) return;
@@ -66,7 +67,21 @@ function ChatWindow() {
     <div className="chatWindow">
       <div className="navbar">
         <span>SigmaGpt <i className="fa-solid fa-chevron-down"></i></span>
-        <div className="userIconDiv"><i className="fa-solid fa-user"></i></div>
+        <div className="userIconDiv"
+           onClick={() => setIsOpen(prev => !prev)}>
+  <i className="fa-solid fa-user"></i>
+</div>
+
+        {
+          isOpen && (
+            <div className="dropdownMenu">
+              <p>User Profile <i class="fa-solid fa-user"></i></p>
+              <p>Settings <i class="fa-solid fa-gear"></i></p>
+              <p onClick={() => window.location.href = "/upgrade"}>Upgrade plan <i class="fa-solid fa-arrow-up-from-bracket"></i></p>
+              <p>Logout <i class="fa-solid fa-right-from-bracket"></i></p>
+            </div>
+          )
+        }
       </div>
 
       <div className="chat">

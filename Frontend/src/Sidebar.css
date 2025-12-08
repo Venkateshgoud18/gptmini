@@ -95,3 +95,7 @@
   .delete-icon:hover {
     color: #ff4d4d;
   }
+
+  .highlighted {
+    background-color: #333536 !important;
+  }

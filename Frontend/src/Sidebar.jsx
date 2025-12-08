@@ -10,6 +10,7 @@ function Sidebar() {
     setNewChat,
     setPrompt,
     setReply,
+    currThreadId,
     setCurrThreadId
   } = React.useContext(MyContext);
 
@@ -104,7 +105,11 @@ function Sidebar() {
         {allThreads.map(thread => (
           <li key={thread.threadId}>
             <div className="thread-info">
-              <p className="thread-title" onClick={(e)=>changeThread(thread.threadId)}>
+            <p
+  onClick={() => changeThread(thread.threadId)}
+  className={`thread-title ${thread.threadId === currThreadId ? "highlighted" : ""}`}
+>
+
 
                 {thread.title || "New Chat"}<i class="fa-solid fa-trash delete-icon" onClick={(e)=>{
                   e.stopPropagation()
