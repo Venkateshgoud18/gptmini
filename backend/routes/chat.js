@@ -2,6 +2,8 @@ import express from 'express';
 const router = express.Router();
 import Thread from '../models/Thread.js';
 import getOpenAIAPIResponce from '../utils/openai.js';
+import User from '../models/User.js';
+import bcrypt from 'bcryptjs';
 
 router.post("/test",async(req,res)=>{
     try{
@@ -126,6 +128,47 @@ router.post("/chat", async (req, res) => {
     } catch (err) {
       console.log("🔥 SERVER ERROR in /api/chat:", err);
       res.status(500).json({ error: err.message || "Server error" });
+    }
+  });
+
+  router.post("/auth/signin",async(req,res)=>{
+    const {username,email,password}=req.body;
+    if(!username || !email || !password){
+        return res.status(400).json({error:"All fields are required"});
+    }
+    const hashedPassword=await bcrypt.hash(password,10);
+    try{
+    const newUser=new User({
+        username,
+        email,
+        password:hashedPassword
+    });
+    const savedUser=await newUser.save();
+    res.json({message:"User registered successfully",userId:savedUser._id});
+  }  catch(error){
+        console.error('Error:', error);
+        res.status(500).json({ error: 'An error occurred while processing your request.' });
+    }
+  });
+
+  router.post("/auth/login",async(req,res)=>{
+    const {email,password}=req.body;
+    if(!email || !password){
+        return res.status(400).json({error:"All fields are required"});
+    }
+    try{
+        const user=await User.findOne({email});
+        if(!user){
+            return res.status(404).json({error:"User not found"});
+        }
+        const isPasswordValid=await bcrypt.compare(password,user.password);
+        if(!isPasswordValid){
+            return res.status(401).json({error:"Invalid credentials"});
+        }
+        res.json({message:"Login successful",userId:user._id});
+    }catch(error){
+        console.error('Error:', error);
+        res.status(500).json({ error: 'An error occurred while processing your request.' });
     }
   });
   
