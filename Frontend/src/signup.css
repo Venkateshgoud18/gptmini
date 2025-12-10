@@ -1,0 +1,82 @@
+/* Fullscreen background */
+.auth-container {
+    height: 100vh;
+    width: 100%;
+    background-color: #0f0f0f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Signup card */
+  .auth-box {
+    background-color: #1b1c1d;
+    width: 360px;
+    padding: 34px;
+    border-radius: 14px;
+    text-align: center;
+    color: white;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Heading */
+  .auth-box h2 {
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  
+  /* Fields */
+  .auth-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: #2a2a2c;
+    border: 1px solid #3a3a3c;
+    border-radius: 10px;
+    color: white;
+    outline: none;
+    font-size: 14px;
+  }
+  
+  /* Button */
+  .auth-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    background-color: #0a84ff;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-size: 15px;
+  }
+  
+  .auth-btn:hover {
+    background-color: #0c95ff;
+  }
+  
+  /* Message (errors or success) */
+  .auth-msg {
+    color: #ff6b6b;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  
+  /* Switch text */
+  .auth-switch {
+    margin-top: 18px;
+    color: #aaa;
+    font-size: 14px;
+  }
+  
+  .auth-switch a {
+    color: #0a84ff;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .auth-switch a:hover {
+    text-decoration: underline;
+  }
+  

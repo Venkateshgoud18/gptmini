@@ -4,6 +4,8 @@ import Thread from '../models/Thread.js';
 import getOpenAIAPIResponce from '../utils/openai.js';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
+import jwt from "jsonwebtoken";
+
 
 router.post("/test",async(req,res)=>{
     try{
@@ -151,24 +153,44 @@ router.post("/chat", async (req, res) => {
     }
   });
 
-  router.post("/auth/login",async(req,res)=>{
-    const {email,password}=req.body;
-    if(!email || !password){
-        return res.status(400).json({error:"All fields are required"});
+  router.post("/auth/login", async (req, res) => {
+    const { email, password } = req.body;
+  
+    // Validate input
+    if (!email || !password) {
+      return res.status(400).json({ error: "All fields are required" });
     }
-    try{
-        const user=await User.findOne({email});
-        if(!user){
-            return res.status(404).json({error:"User not found"});
-        }
-        const isPasswordValid=await bcrypt.compare(password,user.password);
-        if(!isPasswordValid){
-            return res.status(401).json({error:"Invalid credentials"});
-        }
-        res.json({message:"Login successful",userId:user._id});
-    }catch(error){
-        console.error('Error:', error);
-        res.status(500).json({ error: 'An error occurred while processing your request.' });
+  
+    try {
+      // Check user exists
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+  
+      // Check password
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+  
+      // Generate JWT Token
+      const token = jwt.sign(
+        { id: user._id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
+      );
+  
+      // Successful login response
+      res.json({
+        message: "Login successful",
+        token,       // FRONTEND NEEDS THIS
+        userId: user._id
+      });
+  
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Server error. Please try again later." });
     }
   });
   

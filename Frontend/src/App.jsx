@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Sidebar from './Sidebar.jsx'
 import ChatWindow from './ChatWindow.jsx'
-import UpgradePage from './upgrade.jsx'; // <-- ADD THIS
+import UpgradePage from './upgrade.jsx';
+import Login from './login.jsx';   // ← DIRECT LOGIN PAGE
+import Signup from './signup.jsx';
 
 import './App.css'
 import { MyContext } from './MyContext.jsx';
@@ -32,7 +34,7 @@ function App() {
 
         <Routes>
 
-          {/* ⭐ Your original screen — untouched */}
+          {/* main app */}
           <Route path="/" element={
             <div className="app">
               <Sidebar />
@@ -40,8 +42,11 @@ function App() {
             </div>
           } />
 
-          {/* ⭐ New upgrade page */}
           <Route path="/upgrade" element={<UpgradePage />} />
+
+          <Route path="/login" element={<Login />} />
+
+          <Route path="/signup" element={<Signup />} />
 
         </Routes>
 

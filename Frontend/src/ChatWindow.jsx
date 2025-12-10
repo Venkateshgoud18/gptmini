@@ -3,6 +3,9 @@ import './ChatWindow.css';
 import Chat from './Chat.jsx';
 import { MyContext } from './MyContext.jsx';
 import ScaleLoader from "react-spinners/ScaleLoader";
+import Login from './login.jsx';
+import { useNavigate } from "react-router-dom";
+
 
 function ChatWindow() {
   const {
@@ -11,6 +14,9 @@ function ChatWindow() {
     prevChats, setPrevChats,
     newChat, setNewChat,
   } = useContext(MyContext);
+
+  const navigate = useNavigate();
+
 
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -78,6 +84,9 @@ function ChatWindow() {
               <p>User Profile <i class="fa-solid fa-user"></i></p>
               <p>Settings <i class="fa-solid fa-gear"></i></p>
               <p onClick={() => window.location.href = "/upgrade"}>Upgrade plan <i class="fa-solid fa-arrow-up-from-bracket"></i></p>
+              <p onClick={() => navigate("/signup")} className="login-btn">
+  Signup <i className="fa-solid fa-right-from-bracket"></i></p>
+
               <p>Logout <i class="fa-solid fa-right-from-bracket"></i></p>
             </div>
           )
