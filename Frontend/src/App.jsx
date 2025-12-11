@@ -7,6 +7,7 @@ import UpgradePage from './upgrade.jsx';
 import Login from './login.jsx';   // ← DIRECT LOGIN PAGE
 import Signup from './signup.jsx';
 import UserProfile from './profile.jsx';
+import Settings from './settings.jsx';
 
 import './App.css'
 import { MyContext } from './MyContext.jsx';
@@ -50,6 +51,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
 
           <Route path="/profile" element={<UserProfile />} />
+
+          <Route path="/settings" element={<Settings />} />
 
 
 

@@ -1,0 +1,151 @@
+/* ============== MAIN WRAPPER ============== */
+.settings-container {
+    display: flex;
+    height: 100vh;
+    background-color: #0d0d0d;
+    color: #ffffff;
+    font-family: "Inter", sans-serif;
+  }
+  
+  /* ============== SIDEBAR ============== */
+  .settings-sidebar {
+    width: 260px;
+    border-right: 1px solid #262626;
+    padding: 25px;
+  }
+  
+  .settings-sidebar h2 {
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  .settings-sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .settings-sidebar li {
+    padding: 12px 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #cfcfcf;
+    transition: background 0.2s;
+  }
+  
+  .settings-sidebar li:hover {
+    background-color: #1d1d1d;
+  }
+  
+  .settings-sidebar .active {
+    background-color: #333333;
+    color: #ffffff;
+  }
+  
+  /* ============== RIGHT CONTENT ============== */
+  .settings-content {
+    flex: 1;
+    padding: 40px 60px;
+    overflow-y: auto;
+  }
+  
+  .settings-section {
+    margin-bottom: 40px;
+  }
+  
+  .settings-section h3 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  
+  .settings-section p {
+    color: #bdbdbd;
+    margin-bottom: 18px;
+  }
+  
+  /* ============== INPUTS & SELECT ============== */
+  .setting-item {
+    margin-bottom: 18px;
+  }
+  
+  .settings-select {
+    background-color: #1c1c1c;
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 6px;
+    color: white;
+    width: 220px;
+  }
+  
+  /* ============== TOGGLE SWITCH ============== */
+  .toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+  }
+  
+  .switch input {
+    display: none;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    background-color: #555;
+    border-radius: 50px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.2s;
+  }
+  
+  .slider:before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.2s;
+  }
+  
+  input:checked + .slider {
+    background-color: #4caf50;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(20px);
+  }
+  
+  /* ============== BUTTONS ============== */
+  .logout-btn,
+  .delete-btn {
+    background-color: #dc3545;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 15px;
+  }
+  
+  .logout-btn:hover {
+    background-color: #c82333;
+  }
+  
+  .delete-btn:hover {
+    background-color: #b71c1c;
+  }
+  
