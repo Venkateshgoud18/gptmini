@@ -3,7 +3,6 @@ import './ChatWindow.css';
 import Chat from './Chat.jsx';
 import { MyContext } from './MyContext.jsx';
 import ScaleLoader from "react-spinners/ScaleLoader";
-import Login from './login.jsx';
 import { useNavigate } from "react-router-dom";
 
 
@@ -81,7 +80,7 @@ function ChatWindow() {
         {
           isOpen && (
             <div className="dropdownMenu">
-              <p>User Profile <i class="fa-solid fa-user"></i></p>
+              <p onClick={()=>navigate("/profile")}>User Profile <i class="fa-solid fa-user"></i></p>
               <p>Settings <i class="fa-solid fa-gear"></i></p>
               <p onClick={() => window.location.href = "/upgrade"}>Upgrade plan <i class="fa-solid fa-arrow-up-from-bracket"></i></p>
               <p onClick={() => navigate("/signup")} className="login-btn">

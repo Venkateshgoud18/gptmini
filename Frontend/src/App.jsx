@@ -6,6 +6,7 @@ import ChatWindow from './ChatWindow.jsx'
 import UpgradePage from './upgrade.jsx';
 import Login from './login.jsx';   // ← DIRECT LOGIN PAGE
 import Signup from './signup.jsx';
+import UserProfile from './profile.jsx';
 
 import './App.css'
 import { MyContext } from './MyContext.jsx';
@@ -47,6 +48,13 @@ function App() {
           <Route path="/login" element={<Login />} />
 
           <Route path="/signup" element={<Signup />} />
+
+          <Route path="/profile" element={<UserProfile />} />
+
+
+
+
+          
 
         </Routes>
 
