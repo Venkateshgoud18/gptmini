@@ -1,72 +1,83 @@
 .upgrade-container {
-    padding: 40px;
-    text-align: center;
-    color: white;
-    background: #131314;
-    height: 100vh;
-  }
-  
-  .upgrade-title {
-    font-size: 32px;
-    font-weight: 700;
-  }
-  
-  .upgrade-subtitle {
-    font-size: 16px;
-    margin-top: 10px;
-    color: #a0a0a0;
-  }
-  
-  .upgrade-cards {
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-  }
-  
-  .plan-card {
-    background: #1f1f20;
-    padding: 25px;
-    border-radius: 12px;
-    width: 280px;
-    border: 1px solid #2a2a2a;
-  }
-  
-  .plan-card h2 {
-    margin-bottom: 10px;
-  }
-  
-  .plan-card p {
-    color: #dddddd;
-    margin: 6px 0;
-  }
-  
-  .disabled-btn {
-    margin-top: 20px;
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    background: #444;
-    color: white;
-    border: none;
-    cursor: not-allowed;
-  }
-  
- 
-  .upgrade.btn{
-    margin-top:20px;
-    width:100%;
-    padding:10px;
-    border-radius:8px;
-    background:#10a37f;
-    color:white;
-    border:none;
-    cursor:pointer;
-    font-size:16px;
-    transition: 0.2s;;
-  }
-  
-  .upgrade-btn:hover {
-    background: #14b388;
-  }
-  
+  padding: 40px;
+  text-align: center;
+  color: white;
+  background: #131314;
+  height: 100vh;
+}
+
+.upgrade-title {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.upgrade-subtitle {
+  font-size: 16px;
+  margin-top: 10px;
+  color: #a0a0a0;
+}
+
+.upgrade-cards {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.plan-card {
+  background: #1f1f20;
+  padding: 25px;
+  border-radius: 12px;
+  width: 280px;
+  border: 1px solid #2a2a2a;
+}
+
+.plan-card h2 {
+  margin-bottom: 10px;
+}
+
+.plan-card p {
+  color: #dddddd;
+  margin: 6px 0;
+}
+
+.disabled-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  background: #444;
+  color: white;
+  border: none;
+  cursor: not-allowed;
+}
+
+
+.upgrade-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #10a37f, #14b388);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.upgrade-btn:hover {
+  background: linear-gradient(135deg, #14b388, #10a37f);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 163, 127, 0.35);
+}
+
+/*.upgrade-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}*/
+.upgrade-btn:active{
+  transform:translateY(0);
+  box-shadow: none;
+}
