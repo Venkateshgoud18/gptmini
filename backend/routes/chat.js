@@ -103,7 +103,7 @@ router.post("/chat", async (req, res) => {
             const apiResponse = await getOpenAIAPIResponce(message);
           
             // If the API returned an object, convert to string
-            assistantReplay = 
+            assistantReply = 
               typeof apiResponse === "string"
                 ? apiResponse
                 : JSON.stringify(apiResponse);
