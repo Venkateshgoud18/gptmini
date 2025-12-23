@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./Chat.css";
 import { MyContext } from "./MyContext.jsx";
+import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import "highlight.js/styles/github-dark.css";
 
 function Chat() {
   const { newChat, prevChats } = React.useContext(MyContext);
@@ -33,21 +36,26 @@ function Chat() {
       <div className="chats">
         {/* Render all messages except last */}
         {prevChats?.slice(0, -1).map((chat, idx) => (
-          <div
-            className={chat.role === "user" ? "userDiv" : "gptDiv"}
-            key={idx}
-          >
-            <p className={chat.role === "user" ? "userMessage" : "gptMessage"}>
+          <div className={chat.role === "user" ? "userDiv" : "gptDiv"} key={idx}>
+          <div className={chat.role === "user" ? "userMessage" : "gptMessage"}>
+            <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
               {chat.content}
-            </p>
+            </ReactMarkdown>
           </div>
+        </div>
+        
         ))}
 
         {/* Animated GPT message */}
         {prevChats && prevChats.length > 0 && (
           <div className="gptDiv">
-            <p className="gptMessage">{latestReply}</p>
+          <div className="gptMessage">
+            <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
+              {latestReply}
+            </ReactMarkdown>
           </div>
+        </div>
+        
         )}
       </div>
     </>

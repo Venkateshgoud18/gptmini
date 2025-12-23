@@ -71,7 +71,7 @@ function ChatWindow() {
   return (
     <div className="chatWindow">
       <div className="navbar">
-        <span>SigmaGpt <i className="fa-solid fa-chevron-down"></i></span>
+        <span>IntelliChat <i className="fa-solid fa-chevron-down"></i></span>
         <div className="userIconDiv"
            onClick={() => setIsOpen(prev => !prev)}>
   <i className="fa-solid fa-user"></i>
@@ -114,7 +114,7 @@ function ChatWindow() {
           </button>
         </div>
 
-        <p className="info">SigmaGpt can make mistakes</p>
+        <p className="info">IntelliChat can make mistakes</p>
       </div>
     </div>
   );

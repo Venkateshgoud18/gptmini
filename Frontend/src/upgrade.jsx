@@ -4,7 +4,7 @@ import "./upgrade.css";
 function UpgradePage() {
   return (
     <div className="upgrade-container">
-      <h1 className="upgrade-title">Upgrade Your SigmaGPT Experience</h1>
+      <h1 className="upgrade-title">Upgrade Your IntelliChat Experience</h1>
       <p className="upgrade-subtitle">
         Unlock more features, faster responses, and priority access.
       </p>

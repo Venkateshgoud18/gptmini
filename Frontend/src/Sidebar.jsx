@@ -119,20 +119,14 @@ function Sidebar() {
                   }></i>
               </p>
 
-              <p className="last-message">
-                {thread.lastMessage
-                  ? thread.lastMessage.role === "user"
-                    ? thread.lastMessage.content
-                    : "⚠️ GPT unavailable"
-                  : "No messages yet"}
-              </p>
+              
             </div>
           </li>
         ))}
       </ul>
 
       <div className="sign">
-        <p>By Venkatesh ❤️</p>
+        <p>By Venkatesh </p>
       </div>
     </section>
   );
